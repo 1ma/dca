@@ -1,0 +1,9 @@
+[bitstamp]
+api_key = NULL
+customer_id = NULL
+hmac_secret = NULL
+
+[http]
+connect_timeout = 10
+response_timeout = 10
+proxy = NULL

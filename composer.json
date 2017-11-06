@@ -1,0 +1,40 @@
+{
+    "name": "uma/dca",
+    "description": "i will think of something",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php-64bit": ">=7.0",
+        "composer/ca-bundle": "^1.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "monolog/monolog": "^1.23",
+        "pimple/pimple": "^3.2",
+        "roave/security-advisories": "dev-master",
+        "symfony/console": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "UMA\\DCA\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UMA\\Tests\\DCA\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "uma/psr7-hmac": "^0.5.0"
+    },
+    "scripts": {
+        "test": [
+            "@composer install",
+            "wget -nc https://phar.phpunit.de/phpunit.phar",
+            "php phpunit.phar --testdox"
+        ],
+        "pack": [
+            "@composer install --no-dev",
+            "curl -LSs https://box-project.github.io/box2/installer.php | php",
+            "php box.phar build"
+        ]
+    }
+}
