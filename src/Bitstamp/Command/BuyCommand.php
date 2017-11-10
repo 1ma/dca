@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace UMA\DCA\Bitstamp\Command;
 
@@ -9,13 +9,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use UMA\DCA\Bitstamp\Buyer;
+use UMA\DCA\BuyerInterface;
 use UMA\DCA\Dollar;
 
 class BuyCommand extends Command
 {
     /**
-     * @var Buyer
+     * @var BuyerInterface
      */
     private $buyer;
     /**
@@ -23,7 +23,7 @@ class BuyCommand extends Command
      */
     private $logger;
 
-    public function __construct(Buyer $buyer, LoggerInterface $logger)
+    public function __construct(BuyerInterface $buyer, LoggerInterface $logger)
     {
         $this->buyer = $buyer;
         $this->logger = $logger;
@@ -49,20 +49,20 @@ class BuyCommand extends Command
             Dollar::fromCents((int) $input->getArgument('amount'))
         );
 
-        $context = [
+        $ctx = [
             'exchange' => 'bitstamp',
             'response' => json_decode((string) $response->getBody())
         ];
 
-        if (isset($context['response']->reason->__all__[0])) {
-            $this->logger->error($context['response']->reason->__all__[0], $context);
+        if (isset($ctx['response']->reason->__all__[0])) {
+            $this->logger->error($ctx['response']->reason->__all__[0], $ctx);
 
             return 1;
         }
 
         $this->logger->notice(
-            "Bought {$context['response']->amount} BTC at \${$context['response']->price}",
-            $context
+            "Bought {$ctx['response']->amount} BTC at \${$ctx['response']->price}",
+            $ctx
         );
 
         return 0;

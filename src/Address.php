@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace UMA\DCA;
 
 use LinusU\Bitcoin\AddressValidator;
@@ -23,7 +25,7 @@ class Address
         $this->address = $candidate;
     }
 
-    public function fromString(string $candidate): Address
+    public static function fromString(string $candidate): Address
     {
         return new self($candidate);
     }

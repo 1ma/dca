@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace UMA\DCA;
 
@@ -49,7 +49,8 @@ class SharedProvider implements ServiceProviderInterface
 
         $cnt[Logger::class] = function (): LoggerInterface {
             $logger = new Logger(
-                APP_NAME, [new StreamHandler('php://stdout', Logger::DEBUG)]
+                APP_NAME,
+                [new StreamHandler('php://stdout', Logger::DEBUG)]
             );
 
             return $logger;
