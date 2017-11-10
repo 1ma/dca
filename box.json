@@ -1,12 +1,13 @@
 {
   "alias": "dca.phar",
   "chmod": "0755",
-  "directories": ["bin", "src"],
+  "directories": ["src"],
   "compactors": [
     "Herrera\\Box\\Compactor\\Php"
   ],
   "extract": true,
   "files": [
+    "bin/console",
     "bootstrap.php",
     "LICENSE",
     "settings.ini"
@@ -14,7 +15,7 @@
   "finder": [
     {
       "name": ["*.php", "*.pem"],
-      "exclude": ["tests"],
+      "exclude": ["tests", "Tests"],
       "in": ["vendor"]
     }
   ],
