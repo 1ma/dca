@@ -54,10 +54,7 @@ class SharedProvider implements ServiceProviderInterface
                 [new StreamHandler('php://stdout', Logger::DEBUG)]
             );
 
-            $webhookUrl = $cnt['settings']['slack']['webhook_url'];
-            $channel = $cnt['settings']['slack']['channel'];
-
-            if (null !== $webhookUrl && null !== $channel) {
+            if (null !== $webhookUrl = $cnt['settings']['slack']['webhook_url']) {
                 $logger->pushHandler(
                     new SlackHandler(
                         $cnt[Client::class],

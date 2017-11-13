@@ -39,7 +39,8 @@ class WithdrawCommand extends Command
             ->addArgument(
                 'amount',
                 InputArgument::REQUIRED,
-                'Amount of BTC to withdraw, in satoshis (e.g. 0.5 BTC = 50000000')
+                'Amount of BTC to withdraw, in satoshis (e.g. 0.5 BTC = 50000000)'
+            )
             ->addArgument(
                 'address',
                 InputArgument::REQUIRED,

@@ -10,4 +10,3 @@ proxy = NULL
 
 [slack]
 webhook_url = NULL
-channel = NULL
