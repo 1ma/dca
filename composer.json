@@ -5,6 +5,8 @@
     "type": "project",
     "require": {
         "php-64bit": ">=7.0",
+        "ext-curl": "*",
+
         "composer/ca-bundle": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "linusu/bitcoin-address-validator": "^0.1.2",

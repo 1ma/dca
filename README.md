@@ -43,6 +43,6 @@ $ composer pack
 
 - [ ] Proper testing
 - [ ] Proper documentation
-- [ ] Slack integration (leveraging Monolog's `SlackHandler`)
+- [x] Slack integration
 - [ ] Set up Continuous Integration
 - [ ] Support more exchanges (e.g. Kraken, Bittrex, Bitfinex)

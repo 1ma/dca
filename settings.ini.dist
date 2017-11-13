@@ -7,3 +7,7 @@ hmac_secret = NULL
 connect_timeout = 10
 response_timeout = 10
 proxy = NULL
+
+[slack]
+webhook_url = NULL
+channel = NULL
