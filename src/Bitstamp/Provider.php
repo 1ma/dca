@@ -46,11 +46,17 @@ class Provider implements ServiceProviderInterface
         };
 
         $cnt[BuyCommand::class] = function (Container $cnt): BuyCommand {
-            return new BuyCommand($cnt[Buyer::class], $cnt[Logger::class]);
+            return new BuyCommand(
+                $cnt[Buyer::class],
+                $cnt[Logger::class]
+            );
         };
 
         $cnt[WithdrawCommand::class] = function (Container $cnt): WithdrawCommand {
-            return new WithdrawCommand($cnt[Withdrawer::class]);
+            return new WithdrawCommand(
+                $cnt[Withdrawer::class],
+                $cnt[Logger::class]
+            );
         };
     }
 }
