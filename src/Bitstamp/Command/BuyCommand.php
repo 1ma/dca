@@ -37,7 +37,11 @@ class BuyCommand extends Command
     protected function configure()
     {
         $this->setName('bitstamp:buy')
-            ->addArgument('amount', InputArgument::REQUIRED, 'Amount to buy, in USD cents (e.g. 500 = $5.00)');
+            ->addArgument(
+                'amount',
+                InputArgument::REQUIRED,
+                'Amount to buy, in USD cents (e.g. 500 = $5.00)'
+            );
     }
 
     /**
