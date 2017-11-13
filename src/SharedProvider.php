@@ -8,7 +8,6 @@ use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Monolog\ErrorHandler;
-use Monolog\Handler\SlackWebhookHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Pimple\Container;
@@ -16,6 +15,7 @@ use Pimple\ServiceProviderInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application;
 use UMA\DCA\Bitstamp;
+use UMA\DCA\Monolog\SlackHandler;
 
 /**
  * Defines common services across bounded contexts, such
@@ -29,10 +29,8 @@ class SharedProvider implements ServiceProviderInterface
             $config = [
                 RequestOptions::CONNECT_TIMEOUT => $cnt['settings']['http']['connect_timeout'],
                 RequestOptions::TIMEOUT => $cnt['settings']['http']['response_timeout'],
-//                RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath()
+                RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath()
             ];
-
-            // TODO Write my own SlackHandler to be able to use packed cacert.pem and not get cURL error 77
 
             if (null !== $proxy = $cnt['settings']['http']['proxy']) {
                 $config[RequestOptions::PROXY] = $proxy;
@@ -61,9 +59,9 @@ class SharedProvider implements ServiceProviderInterface
 
             if (null !== $webhookUrl && null !== $channel) {
                 $logger->pushHandler(
-                    new SlackWebhookHandler(
-                        $webhookUrl, $channel,
-                        null, false, null, false, false,
+                    new SlackHandler(
+                        $cnt[Client::class],
+                        $webhookUrl,
                         Logger::NOTICE
                     )
                 );
