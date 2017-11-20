@@ -27,7 +27,7 @@ class Bitcoin
     private function __construct(int $satoshis)
     {
         if ($satoshis <= 0 || $satoshis > self::MAXIMUM_AMOUNT) {
-            throw new \InvalidArgumentException('');
+            throw new \InvalidArgumentException("Invalid satoshi amount received. Got: $satoshis");
         }
 
         $this->satoshis = $satoshis;

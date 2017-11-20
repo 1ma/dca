@@ -22,7 +22,7 @@ class Dollar
     private function __construct(int $cents)
     {
         if ($cents <= 0) {
-            throw new \InvalidArgumentException('');
+            throw new \InvalidArgumentException("Invalid cent amount received. Got: $cents");
         }
 
         $this->cents = $cents;
