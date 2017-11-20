@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UMA\DCA;
+namespace UMA\DCA\Model;
 
 use LinusU\Bitcoin\AddressValidator;
 

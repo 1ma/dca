@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace UMA\DCA;
+namespace UMA\DCA\Contract;
 
 use Psr\Http\Message\ResponseInterface;
+use UMA\DCA\Model\Dollar;
 
 interface BuyerInterface
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace UMA\Tests\DCA;
+namespace UMA\Tests\DCA\Model;
 
 use PHPUnit\Framework\TestCase;
-use UMA\DCA\Bitcoin;
+use UMA\DCA\Model\Bitcoin;
 
 class BitcoinTest extends TestCase
 {

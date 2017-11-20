@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Command;
 
 use Psr\Log\LoggerInterface;
-use UMA\DCA\BuyerInterface;
-use UMA\DCA\Dollar;
+use UMA\DCA\Contract\BuyerInterface;
+use UMA\DCA\Model\Dollar;
 use ZF\Console\Route;
 
 class BuyCommand

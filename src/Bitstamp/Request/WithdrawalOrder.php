@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Request;
 
 use GuzzleHttp\Psr7\Request;
-use UMA\DCA\Address;
-use UMA\DCA\Bitcoin;
 use UMA\DCA\Bitstamp\Auth;
+use UMA\DCA\Model\Address;
+use UMA\DCA\Model\Bitcoin;
 
 /**
  * An HTTP request for withdrawing some bitcoin to the given address.

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp;
 
 use GuzzleHttp\Client;
-use UMA\DCA\Bitcoin;
 use UMA\DCA\Bitstamp\Request\GetTicker;
-use UMA\DCA\Dollar;
-use UMA\DCA\ConverterInterface;
+use UMA\DCA\Contract\ConverterInterface;
+use UMA\DCA\Model\Bitcoin;
+use UMA\DCA\Model\Dollar;
 
 /**
  * Bitstamp ConverterInterface implementation.

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Command;
 
 use Psr\Log\LoggerInterface;
-use UMA\DCA\Address;
-use UMA\DCA\Bitcoin;
-use UMA\DCA\WithdrawerInterface;
+use UMA\DCA\Model\Address;
+use UMA\DCA\Model\Bitcoin;
+use UMA\DCA\Contract\WithdrawerInterface;
 use ZF\Console\Route;
 
 class WithdrawCommand

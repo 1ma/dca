@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Request;
 
 use GuzzleHttp\Psr7\Request;
-use UMA\DCA\Bitcoin;
 use UMA\DCA\Bitstamp\Auth;
+use UMA\DCA\Model\Bitcoin;
 
 /**
  * An HTTP request for buying some amount of bitcoin at market price.

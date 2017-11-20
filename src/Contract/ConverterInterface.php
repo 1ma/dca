@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace UMA\DCA;
+namespace UMA\DCA\Contract;
+
+use UMA\DCA\Model\Bitcoin;
+use UMA\DCA\Model\Dollar;
 
 interface ConverterInterface
 {
