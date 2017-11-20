@@ -3,17 +3,22 @@
     "description": "i will think of something",
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/1ma/zf-console"
+        }
+    ],
     "require": {
         "php-64bit": ">=7.0",
         "ext-curl": "*",
-
         "composer/ca-bundle": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "linusu/bitcoin-address-validator": "^0.1.2",
         "monolog/monolog": "^1.23",
         "pimple/pimple": "^3.2",
         "roave/security-advisories": "dev-master",
-        "symfony/console": "^3.3"
+        "zfcampus/zf-console": "dev-interop-to-psr11"
     },
     "autoload": {
         "psr-4": {
@@ -24,9 +29,6 @@
         "psr-4": {
             "UMA\\Tests\\DCA\\": "tests/"
         }
-    },
-    "require-dev": {
-        "uma/psr7-hmac": "^0.5.0"
     },
     "scripts": {
         "hack": [
@@ -43,5 +45,8 @@
             "wget -nc https://github.com/box-project/box2/releases/download/2.7.5/box-2.7.5.phar",
             "php box-2.7.5.phar build"
         ]
+    },
+    "config": {
+        "sort-packages": true
     }
 }

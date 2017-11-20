@@ -11,11 +11,13 @@ use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Pimple\Container;
+use Pimple\Psr11\Container as Psr11Container;
 use Pimple\ServiceProviderInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Application;
 use UMA\DCA\Bitstamp;
 use UMA\DCA\Monolog\SlackHandler;
+use ZF\Console\Application;
+use ZF\Console\Dispatcher;
 
 /**
  * Defines common services across bounded contexts, such
@@ -40,12 +42,20 @@ class SharedProvider implements ServiceProviderInterface
         };
 
         $cnt[Application::class] = function (Container $cnt): Application {
-            $cli = new Application(APP_NAME, APP_VERSION);
-
-            $cli->add($cnt[Bitstamp\Command\BuyCommand::class]);
-            $cli->add($cnt[Bitstamp\Command\WithdrawCommand::class]);
-
-            return $cli;
+            return new Application(
+                APP_NAME, APP_VERSION,
+                [
+                    [
+                        'name' => 'bitstamp:buy <amount>',
+                        'handler' => Bitstamp\Command\BuyCommand::class
+                    ],
+                    [
+                        'name' => 'bitstamp:withdraw <amount> <address>',
+                        'handler' => Bitstamp\Command\WithdrawCommand::class
+                    ]
+                ], null,
+                new Dispatcher(new Psr11Container($cnt))
+            );
         };
 
         $cnt[Logger::class] = function (Container $cnt): LoggerInterface {

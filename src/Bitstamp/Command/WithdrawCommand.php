@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Command;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use UMA\DCA\Address;
 use UMA\DCA\Bitcoin;
 use UMA\DCA\WithdrawerInterface;
+use ZF\Console\Route;
 
-class WithdrawCommand extends Command
+class WithdrawCommand
 {
     /**
      * @var WithdrawerInterface
@@ -29,30 +26,13 @@ class WithdrawCommand extends Command
     {
         $this->withdrawer = $withdrawer;
         $this->logger = $logger;
-
-        parent::__construct();
     }
 
-    protected function configure()
-    {
-        $this->setName('bitstamp:withdraw')
-            ->addArgument(
-                'amount',
-                InputArgument::REQUIRED,
-                'Amount of BTC to withdraw, in satoshis (e.g. 0.5 BTC = 50000000)'
-            )
-            ->addArgument(
-                'address',
-                InputArgument::REQUIRED,
-                'Address where the coins must be sent'
-            );
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function __invoke(Route $route)
     {
         $response = $this->withdrawer->withdraw(
-            $btc = Bitcoin::fromSatoshi((int) $input->getArgument('amount')),
-            $adr = Address::fromString($input->getArgument('address'))
+            $btc = Bitcoin::fromSatoshi((int) $route->getMatchedParam('amount')),
+            $adr = Address::fromString((string) $route->getMatchedParam('address'))
         );
 
         $ctx = [

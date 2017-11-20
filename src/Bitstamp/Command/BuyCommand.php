@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Command;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use UMA\DCA\BuyerInterface;
 use UMA\DCA\Dollar;
+use ZF\Console\Route;
 
-class BuyCommand extends Command
+class BuyCommand
 {
     /**
      * @var BuyerInterface
@@ -27,30 +24,12 @@ class BuyCommand extends Command
     {
         $this->buyer = $buyer;
         $this->logger = $logger;
-
-        parent::__construct(null);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
-    {
-        $this->setName('bitstamp:buy')
-            ->addArgument(
-                'amount',
-                InputArgument::REQUIRED,
-                'Amount to buy, in USD cents (e.g. 500 = $5.00)'
-            );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function __invoke(Route $route)
     {
         $response = $this->buyer->buy(
-            Dollar::fromCents((int) $input->getArgument('amount'))
+            Dollar::fromCents((int) $route->getMatchedParam('amount'))
         );
 
         $ctx = [
