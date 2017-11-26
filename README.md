@@ -39,6 +39,21 @@ Also, remember to put the filled out `settings.ini` file at the root of the proj
 $ composer pack
 ```
 
+## Reference
+
+```bash
+$ ./dca.phar
+dca, version 0.0.0
+
+Available commands:
+
+ autocomplete                          Command autocompletion setup
+ bitstamp:buy <amount>                 Buy BTC at market price at Bitstamp. The amount is given in USD cents.
+ bitstamp:withdraw <amount> <address>  Withdraw BTC from Bitstamp to the given address. The amount is given in satoshis.
+ help                                  Get help for individual commands
+ version                               Display the version of the script
+```
+
 ## TODO to v1.0
 
 - [ ] Proper testing

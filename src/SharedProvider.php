@@ -47,11 +47,13 @@ class SharedProvider implements ServiceProviderInterface
                 [
                     [
                         'name' => 'bitstamp:buy <amount>',
-                        'handler' => Bitstamp\Command\BuyCommand::class
+                        'handler' => Bitstamp\Command\BuyCommand::class,
+                        'short_description' => 'Buy BTC at market price at Bitstamp. The amount is given in USD cents.'
                     ],
                     [
                         'name' => 'bitstamp:withdraw <amount> <address>',
-                        'handler' => Bitstamp\Command\WithdrawCommand::class
+                        'handler' => Bitstamp\Command\WithdrawCommand::class,
+                        'short_description' => 'Withdraw BTC from Bitstamp to the given address. The amount is given in satoshis.'
                     ]
                 ], null,
                 new Dispatcher(new Psr11Container($cnt))
