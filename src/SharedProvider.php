@@ -42,7 +42,7 @@ class SharedProvider implements ServiceProviderInterface
         };
 
         $cnt[Application::class] = function (Container $cnt): Application {
-            return new Application(
+            return (new Application(
                 APP_NAME, APP_VERSION,
                 [
                     [
@@ -57,7 +57,7 @@ class SharedProvider implements ServiceProviderInterface
                     ]
                 ], null,
                 new Dispatcher(new Psr11Container($cnt))
-            );
+            ))->setDebug(true);
         };
 
         $cnt[Logger::class] = function (Container $cnt): LoggerInterface {
