@@ -7,10 +7,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/1ma/ca-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/1ma/zf-console"
         }
     ],
     "require": {
@@ -22,7 +18,7 @@
         "monolog/monolog": "^1.23",
         "pimple/pimple": "^3.2",
         "roave/security-advisories": "dev-master",
-        "zfcampus/zf-console": "dev-interop-to-psr11"
+        "zfcampus/zf-console": "^1.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4"
