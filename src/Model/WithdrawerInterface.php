@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace UMA\DCA\Contract;
+namespace UMA\DCA\Model;
 
 use Psr\Http\Message\ResponseInterface;
-use UMA\DCA\Model\Address;
-use UMA\DCA\Model\Bitcoin;
 
 interface WithdrawerInterface
 {

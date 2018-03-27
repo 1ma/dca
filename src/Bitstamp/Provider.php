@@ -10,9 +10,9 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use UMA\DCA\Bitstamp\Command\BuyCommand;
 use UMA\DCA\Bitstamp\Command\WithdrawCommand;
-use UMA\DCA\Contract\BuyerInterface;
-use UMA\DCA\Contract\ConverterInterface;
-use UMA\DCA\Contract\WithdrawerInterface;
+use UMA\DCA\Model\BuyerInterface;
+use UMA\DCA\Model\ConverterInterface;
+use UMA\DCA\Model\WithdrawerInterface;
 
 class Provider implements ServiceProviderInterface
 {

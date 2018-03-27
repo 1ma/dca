@@ -7,7 +7,7 @@ namespace UMA\DCA\Bitstamp\Command;
 use Psr\Log\LoggerInterface;
 use UMA\DCA\Model\Address;
 use UMA\DCA\Model\Bitcoin;
-use UMA\DCA\Contract\WithdrawerInterface;
+use UMA\DCA\Model\WithdrawerInterface;
 use ZF\Console\Route;
 
 class WithdrawCommand
