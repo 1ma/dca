@@ -8,7 +8,6 @@
   "extract": true,
   "files": [
     "bin/console",
-    "bootstrap.php",
     "LICENSE",
     "settings.ini"
   ],
