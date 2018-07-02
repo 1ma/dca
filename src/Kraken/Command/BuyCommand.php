@@ -55,7 +55,7 @@ class BuyCommand
 
 
         $this->logger->notice(
-            "Order append to Kraken to buy {$ctx['response']->result->descr->order} BTC at \${$ctx['response']->price}",
+            "Order appended to Kraken to buy {$ctx['response']->result->descr->order} BTC at \${$ctx['response']->price}",
             $ctx
         );
 
