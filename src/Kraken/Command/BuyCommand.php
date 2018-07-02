@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace UMA\DCA\Kraken\Command;
 
 use Psr\Log\LoggerInterface;
-use UMA\DCA\Contract\BuyerInterface;
 use UMA\DCA\Kraken\Checker;
+use UMA\DCA\Model\BuyerInterface;
 use UMA\DCA\Model\Dollar;
 use ZF\Console\Route;
 
@@ -14,10 +14,6 @@ class BuyCommand
 {
     const KRAKEN = 'kraken';
 
-    const PENDING = "pending";
-    const CLOSED = 'closed';
-    const CANCELED = 'canceled';
-    const EXPIRED = 'expired';
     /**
      * @var BuyerInterface
      */
@@ -51,43 +47,17 @@ class BuyCommand
         ];
 
 
-        $txId = $ctx['response']['result']['txid'];
-
-
-        $this->logger->notice(
-            "Order appened to Kraken with txId: $txId, waiting to complete",
-            $ctx
-        );
-
-        $isFinished = false;
-        while (!$isFinished && 0 === count($response['error'])) {
-            $response = json_decode($this->checker->check($txId), true);
-            $isFinished = in_array($response['result'][$txId]['status'], [self::CLOSED, self::CANCELED, self::EXPIRED]);
-            sleep(1);
-        }
-
-        $ctx = [
-            'exchange' => self::KRAKEN,
-            'response' => $response
-        ];
-
         if (count($ctx['response']["error"])) {
             $this->logger->error(implode(" ", $ctx['response']['error']), $ctx);
 
             return 1;
         }
 
-        if (self::CLOSED === $response['result'][$txId]['status']) {
-            $this->logger->notice(
-                "Bought {$ctx['response']->result->descr->order} BTC at \${$ctx['response']->price}",
-                $ctx
-            );
-        } else {
-            $this->logger->error(
-                "The transaction $txId is {$response['result'][$txId]['status']}",
-                $ctx
-            );
-        }
+
+        $this->logger->notice(
+            "Order append to Kraken to buy {$ctx['response']->result->descr->order} BTC at \${$ctx['response']->price}",
+            $ctx
+        );
 
         return 0;
     }

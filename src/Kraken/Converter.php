@@ -6,7 +6,7 @@ namespace UMA\DCA\Kraken;
 
 use GuzzleHttp\Client;
 use UMA\DCA\Kraken\Request\GetTicker;
-use UMA\DCA\Contract\ConverterInterface;
+use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\Bitcoin;
 use UMA\DCA\Model\Dollar;
 
