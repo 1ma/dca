@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Pimple\Container;
 use UMA\DCA\Bitstamp;
+use UMA\DCA\Kraken;
 use UMA\DCA\SharedProvider;
 
 define('APP_NAME', 'dca');
@@ -16,6 +17,7 @@ $cnt = new Container([
 ]);
 
 $cnt->register(new Bitstamp\Provider)
+    ->register(new Kraken\Provider)
     ->register(new SharedProvider);
 
 return $cnt;
