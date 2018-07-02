@@ -12,6 +12,7 @@ class NonceGeneratorTest extends TestCase
     public function testNoncesAreUniqueAndMonotonic()
     {
         $seen = [];
+        $maxSeen = 0;
         $provider = new NonceGenerator();
 
         for ($i = 0; $i < 10000; ++$i) {
@@ -19,9 +20,11 @@ class NonceGeneratorTest extends TestCase
 
             self::assertArrayNotHasKey($nonce, $seen);
 
-            $seen[] = $nonce;
+            $seen[$nonce] = true;
 
-            self::assertSame($nonce, max($seen));
+            self::assertTrue($nonce > $maxSeen);
+
+            $maxSeen = $nonce;
         }
     }
 }

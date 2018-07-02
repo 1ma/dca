@@ -7,8 +7,8 @@ namespace UMA\DCA\Bitstamp;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use UMA\DCA\Bitstamp\Request\BuyOrder;
-use UMA\DCA\Contract\BuyerInterface;
-use UMA\DCA\Contract\ConverterInterface;
+use UMA\DCA\Model\BuyerInterface;
+use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\Dollar;
 
 /**

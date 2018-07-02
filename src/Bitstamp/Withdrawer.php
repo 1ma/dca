@@ -7,9 +7,9 @@ namespace UMA\DCA\Bitstamp;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use UMA\DCA\Bitstamp\Request\WithdrawalOrder;
-use UMA\DCA\Contract\WithdrawerInterface;
 use UMA\DCA\Model\Address;
 use UMA\DCA\Model\Bitcoin;
+use UMA\DCA\Model\WithdrawerInterface;
 
 /**
  * Bitstamp implementation of the WithdrawerInterface.

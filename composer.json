@@ -11,11 +11,11 @@
         "linusu/bitcoin-address-validator": "^0.1.2",
         "monolog/monolog": "^1.23",
         "pimple/pimple": "^3.2",
-        "roave/security-advisories": "dev-master",
         "zfcampus/zf-console": "^1.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.4"
+        "phpunit/phpunit": "^7.0",
+        "roave/security-advisories": "dev-master"
     },
     "autoload": {
         "psr-4": {

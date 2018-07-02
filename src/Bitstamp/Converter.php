@@ -6,8 +6,8 @@ namespace UMA\DCA\Bitstamp;
 
 use GuzzleHttp\Client;
 use UMA\DCA\Bitstamp\Request\GetTicker;
-use UMA\DCA\Contract\ConverterInterface;
 use UMA\DCA\Model\Bitcoin;
+use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\Dollar;
 
 /**
