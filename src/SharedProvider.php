@@ -54,6 +54,16 @@ class SharedProvider implements ServiceProviderInterface
                         'name' => 'bitstamp:withdraw <amount> <address>',
                         'handler' => Bitstamp\Command\WithdrawCommand::class,
                         'short_description' => 'Withdraw BTC from Bitstamp to the given address. The amount is given in satoshis.'
+                    ],
+                    [
+                        'name' => 'kraken:buy <amount>',
+                        'handler' => Kraken\Command\BuyCommand::class,
+                        'short_description' => 'Buy BTC at market price at Kraken. The amount is given in USD cents.'
+                    ],
+                    [
+                        'name' => 'kraken:withdraw <amount> <address>',
+                        'handler' => Kraken\Command\WithdrawCommand::class,
+                        'short_description' => 'Withdraw BTC from Kraken to the given address. The amount is given in satoshis. You must add an address on your admin panel'
                     ]
                 ], null,
                 new Dispatcher(new Psr11Container($cnt))
