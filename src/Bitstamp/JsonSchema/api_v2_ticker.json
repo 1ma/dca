@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+
+  "title": "https://www.bitstamp.net/api/v2/ticker/{currency_pair}/",
+  "description": "documentation of the ticker Bitstamp API response. {currency_pair} may be btceur or btcusd",
+
+  "type": "object",
+  "required": [
+    "high",
+    "last",
+    "timestamp",
+    "bid",
+    "vwap",
+    "volume",
+    "low",
+    "ask",
+    "open"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "high": { "type": "number" },
+    "last": { "type": "number" },
+    "timestamp": { "type": "integer" },
+    "bid": { "type": "number" },
+    "vwap": { "type": "number" },
+    "volume": { "type": "number" },
+    "low": { "type": "number" },
+    "ask": { "type": "number" },
+    "open": { "type": "number" }
+  }
+}
