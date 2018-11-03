@@ -10,8 +10,8 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use UMA\DCA\Bitstamp\Command\BuyCommand;
 use UMA\DCA\Bitstamp\Command\WithdrawCommand;
-use UMA\DCA\Model\BuyerInterface;
 use UMA\DCA\Model\ConverterInterface;
+use UMA\DCA\Model\EuroBuyerInterface;
 use UMA\DCA\Model\WithdrawerInterface;
 
 class Provider implements ServiceProviderInterface
@@ -30,7 +30,7 @@ class Provider implements ServiceProviderInterface
             return new Converter($cnt[Client::class]);
         };
 
-        $cnt[Buyer::class] = function (Container $cnt): BuyerInterface {
+        $cnt[Buyer::class] = function (Container $cnt): EuroBuyerInterface {
             return new Buyer(
                 $cnt[Auth::class],
                 $cnt[Client::class],

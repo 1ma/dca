@@ -15,7 +15,7 @@ use UMA\DCA\Model\Bitcoin;
  */
 class BuyOrder extends Request
 {
-    const ENDPOINT = 'https://www.bitstamp.net/api/v2/buy/market/btcusd/';
+    const ENDPOINT = 'https://www.bitstamp.net/api/v2/buy/market/btceur/';
 
     public function __construct(Auth $auth, Bitcoin $amount)
     {

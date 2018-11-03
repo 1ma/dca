@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace UMA\DCA\Bitstamp\Command;
 
 use Psr\Log\LoggerInterface;
-use UMA\DCA\Model\BuyerInterface;
-use UMA\DCA\Model\Dollar;
+use UMA\DCA\Model\Euro;
+use UMA\DCA\Model\EuroBuyerInterface;
 use ZF\Console\Route;
 
 class BuyCommand
 {
     /**
-     * @var BuyerInterface
+     * @var EuroBuyerInterface
      */
     private $buyer;
     /**
@@ -20,7 +20,7 @@ class BuyCommand
      */
     private $logger;
 
-    public function __construct(BuyerInterface $buyer, LoggerInterface $logger)
+    public function __construct(EuroBuyerInterface $buyer, LoggerInterface $logger)
     {
         $this->buyer = $buyer;
         $this->logger = $logger;
@@ -29,7 +29,7 @@ class BuyCommand
     public function __invoke(Route $route)
     {
         $response = $this->buyer->buy(
-            Dollar::fromCents((int) $route->getMatchedParam('amount'))
+            Euro::fromCents((int) $route->getMatchedParam('amount'))
         );
 
         $ctx = [
@@ -44,7 +44,7 @@ class BuyCommand
         }
 
         $this->logger->notice(
-            "Bought {$ctx['response']->amount} BTC at \${$ctx['response']->price}",
+            "Bought {$ctx['response']->amount} BTC at {$ctx['response']->price}€",
             $ctx
         );
 

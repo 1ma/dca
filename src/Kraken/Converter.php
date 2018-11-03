@@ -9,6 +9,7 @@ use UMA\DCA\Kraken\Request\GetTicker;
 use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\Bitcoin;
 use UMA\DCA\Model\Dollar;
+use UMA\DCA\Model\Euro;
 
 /**
  * Kraken ConverterInterface implementation.
@@ -33,5 +34,13 @@ class Converter implements ConverterInterface
         $exchangeRate = (float) json_decode((string) $this->http->send(new GetTicker)->getBody(), true)["c"][0];
 
         return $dollar->toBitcoin($exchangeRate);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function EURBTC(Euro $euro): Bitcoin
+    {
+        throw new \LogicException('Not implemented yet');
     }
 }

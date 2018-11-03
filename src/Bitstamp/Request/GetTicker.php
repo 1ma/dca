@@ -13,10 +13,14 @@ use GuzzleHttp\Psr7\Request;
  */
 class GetTicker extends Request
 {
-    const ENDPOINT = 'https://www.bitstamp.net/api/v2/ticker/btcusd/';
+    const ENDPOINT = 'https://www.bitstamp.net/api/v2/ticker/btc%s/';
 
-    public function __construct()
+    public function __construct(string $currency)
     {
-        parent::__construct('GET', self::ENDPOINT);
+        if (!\in_array($currency, ['eur', 'usd'])) {
+            throw new \LogicException("Invalid currency supplied. Got: $currency");
+        }
+
+        parent::__construct('GET', \sprintf(self::ENDPOINT, $currency));
     }
 }
