@@ -29,7 +29,7 @@ class BuyCommand
     public function __invoke(Route $route)
     {
         $response = $this->buyer->buy(
-            Euro::fromCents((int) $route->getMatchedParam('amount'))
+            $euro = Euro::fromCents((int) $route->getMatchedParam('amount'))
         );
 
         $ctx = [
@@ -43,10 +43,10 @@ class BuyCommand
             return 1;
         }
 
-        $this->logger->notice(
-            "Bought {$ctx['response']->amount} BTC at {$ctx['response']->price}€",
-            $ctx
-        );
+        $this->logger->notice(\sprintf(
+            'Bought %s€ of Bitcoin at %s€ (amount: %s)',
+            (string) $euro, $ctx['response']->price, $ctx['response']->amount
+        ));
 
         return 0;
     }
