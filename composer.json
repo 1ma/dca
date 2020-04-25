@@ -33,9 +33,9 @@
             "php vendor/bin/phpunit --testdox"
         ],
         "pack": [
-            "@composer install --no-dev",
-            "wget -nc https://github.com/box-project/box2/releases/download/2.7.5/box-2.7.5.phar",
-            "php box-2.7.5.phar build"
+            "rm -f dca.phar",
+            "@composer install --no-dev --classmap-authoritative",
+            "php bin/pack.php"
         ]
     },
     "config": {
