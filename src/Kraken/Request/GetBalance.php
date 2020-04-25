@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UMA\DCA\Bitstamp\Request;
+namespace UMA\DCA\Kraken\Request;
 
 use GuzzleHttp\Psr7\Request;
 use UMA\DCA\Kraken\Auth;
