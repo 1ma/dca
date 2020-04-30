@@ -37,7 +37,6 @@ class Provider implements ServiceProviderInterface
             );
         };
 
-
         $cnt[Checker::class] = function (Container $cnt): Checker {
             return new Checker(
                 $cnt[Auth::class],

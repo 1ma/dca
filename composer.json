@@ -9,7 +9,7 @@
         "composer/ca-bundle": "^1.2",
         "guzzlehttp/guzzle": "^6.5",
         "linusu/bitcoin-address-validator": "^0.1.2",
-        "monolog/monolog": "^1.25",
+        "monolog/monolog": "^2.0",
         "pimple/pimple": "^3.3",
         "zfcampus/zf-console": "^1.4"
     },

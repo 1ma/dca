@@ -33,7 +33,7 @@ class SlackHandler extends AbstractProcessingHandler
     /**
      * {@inheritdoc}
      */
-    protected function write(array $record)
+    protected function write(array $record): void
     {
         $this->http->post($this->url, [
             'json' => ['text' => $record['formatted']]
