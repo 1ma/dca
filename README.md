@@ -1,5 +1,7 @@
 # DCA
 
+[![.github/workflows/phpunit.yml](https://github.com/1ma/dca/actions/workflows/phpunit.yml/badge.svg)](https://github.com/1ma/dca/actions)
+
 ## Example
 
 Buy $5.00 worth of BTC at current market price at Bitstamp:

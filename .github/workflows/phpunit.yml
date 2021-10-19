@@ -1,0 +1,98 @@
+on: push
+
+jobs:
+  php73-test:
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:7.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Run tests in PHP 7.3
+        run: |
+          composer install
+          composer test
+
+  php73-compile:
+    needs: php73-test
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:7.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Compile dca.phar under PHP 7.3
+        run: |
+          cp settings.ini.dist settings.ini
+          composer compile
+          ./dca.phar --version
+
+  php74-test:
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:7.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Run tests in PHP 7.4
+        run: |
+          composer install
+          composer test
+
+  php74-compile:
+    needs: php74-test
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:7.4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Compile dca.phar under PHP 7.4
+        run: |
+          cp settings.ini.dist settings.ini
+          composer compile
+          ./dca.phar --version
+
+  php80-test:
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:8.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Run tests in PHP 8.0
+        run: |
+          composer install
+          composer test
+
+  php80-compile:
+    needs: php80-test
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:8.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Compile dca.phar under PHP 8.0
+        run: |
+          cp settings.ini.dist settings.ini
+          composer compile
+          ./dca.phar --version
+
+  php81-test:
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:8.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Run tests in PHP 8.1
+        run: |
+          composer install
+          composer test
+
+  php81-compile:
+    needs: php81-test
+    runs-on: ubuntu-latest
+    container: 1maa/php-dev:8.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Compile dca.phar under PHP 8.1
+        run: |
+          cp settings.ini.dist settings.ini
+          composer compile
+          ./dca.phar --version
