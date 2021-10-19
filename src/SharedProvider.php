@@ -10,12 +10,11 @@ use GuzzleHttp\RequestOptions;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Pimple\Container;
-use Pimple\Psr11\Container as Psr11Container;
-use Pimple\ServiceProviderInterface;
 use Psr\Log\LoggerInterface;
 use UMA\DCA\Bitstamp;
 use UMA\DCA\Monolog\SlackHandler;
+use UMA\DIC\Container;
+use UMA\DIC\ServiceProvider;
 use ZF\Console\Application;
 use ZF\Console\Dispatcher;
 
@@ -23,25 +22,27 @@ use ZF\Console\Dispatcher;
  * Defines common services across bounded contexts, such
  * as the logger or the HTTP client.
  */
-class SharedProvider implements ServiceProviderInterface
+class SharedProvider implements ServiceProvider
 {
-    public function register(Container $cnt)
+    public function provide(Container $c): void
     {
-        $cnt[Client::class] = function (Container $cnt): Client {
+        $c->set(Client::class, static function (Container $c): Client {
+            $httpSettings = $c->get('settings')['http'];
+
             $config = [
-                RequestOptions::CONNECT_TIMEOUT => $cnt['settings']['http']['connect_timeout'],
-                RequestOptions::TIMEOUT => $cnt['settings']['http']['response_timeout'],
+                RequestOptions::CONNECT_TIMEOUT => $httpSettings['connect_timeout'],
+                RequestOptions::TIMEOUT => $httpSettings['response_timeout'],
                 RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath()
             ];
 
-            if (null !== $proxy = $cnt['settings']['http']['proxy']) {
+            if (null !== $proxy = $httpSettings['proxy']) {
                 $config[RequestOptions::PROXY] = $proxy;
             }
 
             return new Client($config);
-        };
+        });
 
-        $cnt[Application::class] = function (Container $cnt): Application {
+        $c->set(Application::class, static function (Container $c): Application {
             return (new Application(
                 APP_NAME, APP_VERSION,
                 [
@@ -66,20 +67,20 @@ class SharedProvider implements ServiceProviderInterface
                         'short_description' => 'Withdraw BTC from Kraken to the given address. The amount is given in satoshis. You must add an address on your admin panel'
                     ]
                 ], null,
-                new Dispatcher(new Psr11Container($cnt))
+                new Dispatcher($c)
             ))->setDebug(true);
-        };
+        });
 
-        $cnt[Logger::class] = function (Container $cnt): LoggerInterface {
+        $c->set(Logger::class, static function (Container $c): LoggerInterface {
             $logger = new Logger(
                 APP_NAME,
                 [new StreamHandler('php://stdout', Logger::DEBUG)]
             );
 
-            if (null !== $webhookUrl = $cnt['settings']['slack']['webhook_url']) {
+            if (null !== $webhookUrl = $c->get('settings')['slack']['webhook_url']) {
                 $logger->pushHandler(
                     new SlackHandler(
-                        $cnt[Client::class],
+                        $c[Client::class],
                         $webhookUrl,
                         Logger::NOTICE
                     )
@@ -87,8 +88,8 @@ class SharedProvider implements ServiceProviderInterface
             }
 
             return $logger;
-        };
+        });
 
-        ErrorHandler::register($cnt[Logger::class], [], Logger::CRITICAL);
+        ErrorHandler::register($c->get(Logger::class), [], Logger::CRITICAL);
     }
 }

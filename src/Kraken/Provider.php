@@ -6,64 +6,64 @@ namespace UMA\DCA\Kraken;
 
 use GuzzleHttp\Client;
 use Monolog\Logger;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
 use UMA\DCA\Kraken\Command\BuyCommand;
 use UMA\DCA\Kraken\Command\WithdrawCommand;
 use UMA\DCA\Model\BuyerInterface;
 use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\WithdrawerInterface;
+use UMA\DIC\Container;
+use UMA\DIC\ServiceProvider;
 
-class Provider implements ServiceProviderInterface
+class Provider implements ServiceProvider
 {
-    public function register(Container $cnt)
+    public function provide(Container $c): void
     {
-        $cnt[Auth::class] = function (Container $cnt): Auth {
+        $c->set(Auth::class, static function (Container $c): Auth {
             return new Auth(
-                (string) $cnt['settings']['kraken']['api_key'],
-                (string) $cnt['settings']['kraken']['secret']
+                (string) $c->get('settings')['kraken']['api_key'],
+                (string) $c->get('settings')['kraken']['secret']
             );
-        };
+        });
 
-        $cnt[Converter::class] = function (Container $cnt): ConverterInterface {
-            return new Converter($cnt[Client::class]);
-        };
+        $c->set(Converter::class, static function (Container $c): ConverterInterface {
+            return new Converter($c->get(Client::class));
+        });
 
-        $cnt[Buyer::class] = function (Container $cnt): BuyerInterface {
+        $c->set(Buyer::class, static function (Container $c): BuyerInterface {
             return new Buyer(
-                $cnt[Auth::class],
-                $cnt[Client::class],
-                $cnt[Converter::class]
+                $c->get(Auth::class),
+                $c->get(Client::class),
+                $c->get(Converter::class)
             );
-        };
+        });
 
-        $cnt[Checker::class] = function (Container $cnt): Checker {
+        $c->set(Checker::class, static function (Container $c): Checker {
             return new Checker(
-                $cnt[Auth::class],
-                $cnt[Client::class]
+                $c->get(Auth::class),
+                $c->get(Client::class)
             );
-        };
+        });
 
-        $cnt[Withdrawer::class] = function (Container $cnt): WithdrawerInterface {
+        $c->set(Withdrawer::class, static function (Container $c): WithdrawerInterface {
             return new Withdrawer(
-                $cnt[Auth::class],
-                $cnt[Client::class]
+                $c->get(Auth::class),
+                $c->get(Client::class)
             );
-        };
+        });
 
-        $cnt[BuyCommand::class] = function (Container $cnt): BuyCommand {
+        $c->set(BuyCommand::class, static function (Container $c): BuyCommand {
             return new BuyCommand(
-                $cnt[Buyer::class],
-                $cnt[Logger::class],
-                $cnt[Checker::class]
+                $c->get(Buyer::class),
+                $c->get(Logger::class),
+                $c->get(Checker::class)
             );
-        };
+        });
 
-        $cnt[WithdrawCommand::class] = function (Container $cnt): WithdrawCommand {
+        $c->set(WithdrawCommand::class, static function (Container $c): WithdrawCommand {
             return new WithdrawCommand(
-                $cnt[Withdrawer::class],
-                $cnt[Logger::class]
+                $c->get(Withdrawer::class),
+                $c->get(Logger::class)
             );
-        };
+        });
     }
 }
