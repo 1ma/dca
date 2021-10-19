@@ -90,6 +90,6 @@ class SharedProvider implements ServiceProvider
             return $logger;
         });
 
-        ErrorHandler::register($c->get(Logger::class), [], Logger::CRITICAL);
+        ErrorHandler::register($c->get(Logger::class), [], [], Logger::CRITICAL);
     }
 }
