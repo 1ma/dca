@@ -33,8 +33,7 @@
         ],
         "compile": [
             "@composer install --no-dev --classmap-authoritative",
-            "php -dphar.readonly=0 bin/compile",
-            "chmod +x dca.phar"
+            "@php -dphar.readonly=0 bin/compile"
         ]
     },
     "config": {

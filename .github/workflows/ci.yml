@@ -19,11 +19,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Compile dca.phar under PHP 8.0
+      - name: Compile dca.phar
         run: |
           cp settings.ini.dist settings.ini
           composer compile
-          ./dca.phar
+          ./dca.phar list --ansi
 
   php81-test:
     runs-on: ubuntu-latest
@@ -43,8 +43,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Compile dca.phar under PHP 8.1
+      - name: Compile dca.phar
         run: |
           cp settings.ini.dist settings.ini
           composer compile
-          ./dca.phar
+          ./dca.phar list --ansi

@@ -4,12 +4,13 @@
 declare(strict_types=1);
 
 $root = dirname(__DIR__);
+$binary = $root . '/dca.phar';
 
-if (file_exists($root . '/dca.phar')) {
-    unlink($root . '/dca.phar');
+if (file_exists($binary)) {
+    unlink($binary);
 }
 
-$phar = new Phar($root . '/dca.phar', 0, $root . '/dca.phar');
+$phar = new Phar($binary, 0, $binary);
 $phar = $phar->convertToExecutable(Phar::PHAR, Phar::NONE);
 
 $phar->startBuffering();
@@ -44,3 +45,5 @@ PHP
 );
 
 $phar->stopBuffering();
+
+chmod($binary, 0775);
