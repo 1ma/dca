@@ -5,34 +5,43 @@ declare(strict_types=1);
 namespace UMA\DCA\Kraken\Command;
 
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use UMA\DCA\Model\Address;
 use UMA\DCA\Model\Bitcoin;
 use UMA\DCA\Model\WithdrawerInterface;
-use ZF\Console\Route;
 
-class WithdrawCommand
+#[AsCommand(
+    name: 'kraken:withdraw',
+    description: 'Withdraw BTC from Kraken to the given address.'
+)]
+class WithdrawCommand extends Command
 {
-    /**
-     * @var WithdrawerInterface
-     */
-    private $withdrawer;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private WithdrawerInterface $withdrawer;
+    private LoggerInterface $logger;
 
     public function __construct(WithdrawerInterface $withdrawer, LoggerInterface $logger)
     {
         $this->withdrawer = $withdrawer;
         $this->logger = $logger;
+        parent::__construct();
     }
 
-    public function __invoke(Route $route)
+    protected function configure()
+    {
+        $this
+            ->addArgument('amount', InputArgument::REQUIRED, 'Amount of BTC to withdraw, given in satoshis')
+            ->addArgument('address', InputArgument::REQUIRED, 'Bitcoin address where to send the BTC');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $response = $this->withdrawer->withdraw(
-            $btc = Bitcoin::fromSatoshi((int) $route->getMatchedParam('amount')),
-            $adr = Address::fromString((string) $route->getMatchedParam('address'))
+            $btc = Bitcoin::fromSatoshi((int) $input->getArgument('amount')),
+            $adr = Address::fromString((string) $input->getArgument('address'))
         );
 
         $ctx = [

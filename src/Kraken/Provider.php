@@ -54,8 +54,7 @@ class Provider implements ServiceProvider
         $c->set(BuyCommand::class, static function (Container $c): BuyCommand {
             return new BuyCommand(
                 $c->get(Buyer::class),
-                $c->get(Logger::class),
-                $c->get(Checker::class)
+                $c->get(Logger::class)
             );
         });
 

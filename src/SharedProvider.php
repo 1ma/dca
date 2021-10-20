@@ -11,12 +11,12 @@ use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 use UMA\DCA\Bitstamp;
 use UMA\DCA\Monolog\SlackHandler;
 use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
-use ZF\Console\Application;
-use ZF\Console\Dispatcher;
 
 /**
  * Defines common services across bounded contexts, such
@@ -43,32 +43,16 @@ class SharedProvider implements ServiceProvider
         });
 
         $c->set(Application::class, static function (Container $c): Application {
-            return (new Application(
-                APP_NAME, APP_VERSION,
-                [
-                    [
-                        'name' => 'bitstamp:buy <amount>',
-                        'handler' => Bitstamp\Command\BuyCommand::class,
-                        'short_description' => 'Buy BTC at market price at Bitstamp. The amount is given in USD cents.'
-                    ],
-                    [
-                        'name' => 'bitstamp:withdraw <amount> <address>',
-                        'handler' => Bitstamp\Command\WithdrawCommand::class,
-                        'short_description' => 'Withdraw BTC from Bitstamp to the given address. The amount is given in satoshis.'
-                    ],
-                    [
-                        'name' => 'kraken:buy <amount>',
-                        'handler' => Kraken\Command\BuyCommand::class,
-                        'short_description' => 'Buy BTC at market price at Kraken. The amount is given in USD cents.'
-                    ],
-                    [
-                        'name' => 'kraken:withdraw <amount> <address>',
-                        'handler' => Kraken\Command\WithdrawCommand::class,
-                        'short_description' => 'Withdraw BTC from Kraken to the given address. The amount is given in satoshis. You must add an address on your admin panel'
-                    ]
-                ], null,
-                new Dispatcher($c)
-            ))->setDebug(true);
+            $app = new Application(APP_NAME, APP_VERSION);
+            $app->setAutoExit(false);
+            $app->setCommandLoader(new ContainerCommandLoader($c, [
+                'bitstamp:buy' => Bitstamp\Command\BuyCommand::class,
+                'bitstamp:withdraw' => Bitstamp\Command\WithdrawCommand::class,
+                'kraken:buy' => Kraken\Command\BuyCommand::class,
+                'kraken:withdraw' => Kraken\Command\WithdrawCommand::class,
+            ]));
+
+            return $app;
         });
 
         $c->set(Logger::class, static function (Container $c): LoggerInterface {

@@ -5,40 +5,41 @@ declare(strict_types=1);
 namespace UMA\DCA\Kraken\Command;
 
 use Psr\Log\LoggerInterface;
-use UMA\DCA\Kraken\Checker;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use UMA\DCA\Model\BuyerInterface;
 use UMA\DCA\Model\Dollar;
-use ZF\Console\Route;
 
-class BuyCommand
+#[AsCommand(
+    name: 'kraken:buy',
+    description: 'Buy BTC at market price at Kraken.'
+)]
+class BuyCommand extends Command
 {
-    const KRAKEN = 'kraken';
+    private const KRAKEN = 'kraken';
 
-    /**
-     * @var BuyerInterface
-     */
-    private $buyer;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private BuyerInterface $buyer;
+    private LoggerInterface $logger;
 
-    /**
-     * @var Checker
-     */
-    private $checker;
-
-    public function __construct(BuyerInterface $buyer, LoggerInterface $logger, Checker $checker)
+    public function __construct(BuyerInterface $buyer, LoggerInterface $logger)
     {
         $this->buyer = $buyer;
-        $this->checker = $checker;
         $this->logger = $logger;
+        parent::__construct();
     }
 
-    public function __invoke(Route $route)
+    protected function configure()
+    {
+        $this->addArgument('amount', InputArgument::REQUIRED, 'Amount of BTC to buy, in USD cents');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $response = $this->buyer->buy(
-            Dollar::fromCents((int) $route->getMatchedParam('amount'))
+            Dollar::fromCents((int) $input->getArgument('amount'))
         );
 
         $ctx = [
@@ -46,13 +47,11 @@ class BuyCommand
             'response' => json_decode((string) $response->getBody(), true)
         ];
 
-
         if (count($ctx['response']["error"])) {
             $this->logger->error(implode(" ", $ctx['response']['error']), $ctx);
 
             return 1;
         }
-
 
         $this->logger->notice(
             "Order appended to Kraken to buy {$ctx['response']->result->descr->order} BTC at \${$ctx['response']->price}",

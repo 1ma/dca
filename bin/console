@@ -3,11 +3,11 @@
 
 declare(strict_types=1);
 
+use Symfony\Component\Console\Application;
 use UMA\DCA\Bitstamp;
 use UMA\DCA\SharedProvider;
 use UMA\DCA\Kraken;
 use UMA\DIC\Container;
-use ZF\Console\Application;
 
 const APP_NAME = 'dca';
 const APP_VERSION = '0.0.0';
