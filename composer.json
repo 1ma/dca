@@ -32,7 +32,6 @@
             "php vendor/bin/phpunit --testdox"
         ],
         "compile": [
-            "rm -f dca.phar",
             "@composer install --no-dev --classmap-authoritative",
             "php -dphar.readonly=0 bin/compile",
             "chmod +x dca.phar"

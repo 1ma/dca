@@ -23,7 +23,7 @@ jobs:
         run: |
           cp settings.ini.dist settings.ini
           composer compile
-          ./dca.phar --version
+          ./dca.phar
 
   php81-test:
     runs-on: ubuntu-latest
@@ -47,4 +47,4 @@ jobs:
         run: |
           cp settings.ini.dist settings.ini
           composer compile
-          ./dca.phar --version
+          ./dca.phar
