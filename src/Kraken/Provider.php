@@ -21,7 +21,7 @@ class Provider implements ServiceProvider
         $c->set(Auth::class, static function (Container $c): Auth {
             return new Auth(
                 (string) $c->get('settings')['kraken']['api_key'],
-                (string) $c->get('settings')['kraken']['secret']
+                (string) $c->get('settings')['kraken']['api_secret']
             );
         });
 
