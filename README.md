@@ -1,6 +1,6 @@
 # DCA
 
-[![.github/workflows/phpunit.yml](https://github.com/1ma/dca/actions/workflows/phpunit.yml/badge.svg)](https://github.com/1ma/dca/actions)
+[![.github/workflows/ci.yml](https://github.com/1ma/dca/actions/workflows/ci.yml/badge.svg)](https://github.com/1ma/dca/actions)
 
 ## Example
 
@@ -13,9 +13,9 @@ $ nano settings.ini
 
 # running the main script from project sources
 $ composer install --no-dev
-$ php bin/console bitstamp:buy 500
+$ php bin/dca bitstamp:buy 500
 
-# using a portable executable (see below)
+# same command, running the portable executable (see below)
 $ ./dca.phar b:b 500
 ```
 
@@ -32,28 +32,40 @@ Cron automation:
 $ composer test
 ```
 
-## Building the executable
-
-You might need to disable the `phar.readonly` directive in your php.ini file.
-Also, remember to put the filled out `settings.ini` file at the root of the project.
+## Building the portable PHAR executable
 
 ```bash
-$ composer pack
+$ composer compile
 ```
+
+For that to work, a `settings.ini` file must be present at the root of the project.
 
 ## Reference
 
 ```bash
 $ ./dca.phar
-dca, version 0.0.0
+dca 0.0.0
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display help for the given command. When no command is given display help for the list command
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi|--no-ansi  Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
 Available commands:
-
- autocomplete                          Command autocompletion setup
- bitstamp:buy <amount>                 Buy BTC at market price at Bitstamp. The amount is given in USD cents.
- bitstamp:withdraw <amount> <address>  Withdraw BTC from Bitstamp to the given address. The amount is given in satoshis.
- help                                  Get help for individual commands
- version                               Display the version of the script
+  help               Display help for a command
+  list               List commands
+ bitstamp
+  bitstamp:buy       Buy BTC at market price at Bitstamp.
+  bitstamp:withdraw  Withdraw BTC from Bitstamp to the given address.
+ kraken
+  kraken:buy         Buy BTC at market price at Kraken.
+  kraken:withdraw    Withdraw BTC from Kraken to the given address.
 ```
 
 ## TODO to v1.0
@@ -61,5 +73,5 @@ Available commands:
 - [ ] Proper testing
 - [ ] Proper documentation
 - [x] Slack integration
-- [ ] Set up Continuous Integration
+- [x] Set up Continuous Integration
 - [ ] Support more exchanges (e.g. Kraken, Bittrex, Bitfinex)

@@ -18,17 +18,16 @@ $phar->addFile($root . '/LICENSE', 'LICENSE');
 $phar->addFile($root . '/settings.ini', 'settings.ini');
 
 $filter = static function(SplFileInfo $current, $key, RecursiveIterator $iterator): bool {
-    if ($iterator->hasChildren()) {
-        return true;
-    }
-
-    return $current->isFile();
+    return $iterator->hasChildren() || $current->isFile();
 };
 
-$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator(new RecursiveDirectoryIterator($root . '/src'), $filter)), $root);
-$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator(new RecursiveDirectoryIterator($root . '/vendor'), $filter)), $root);
+$src = new RecursiveCallbackFilterIterator(new RecursiveDirectoryIterator($root . '/src'), $filter);
+$vendor = new RecursiveCallbackFilterIterator(new RecursiveDirectoryIterator($root . '/vendor'), $filter);
 
-$phar->addFromString('/bin/console.php', str_replace("#!/usr/bin/env php\n", '', file_get_contents($root . '/bin/console')));
+$phar->buildFromIterator(new RecursiveIteratorIterator($src), $root);
+$phar->buildFromIterator(new RecursiveIteratorIterator($vendor), $root);
+
+$phar->addFromString('/bin/dca.php', str_replace("#!/usr/bin/env php\n", '', file_get_contents($root . '/bin/dca')));
 
 $phar->setStub(<<<'PHP'
 #!/usr/bin/env php
@@ -38,7 +37,7 @@ declare(strict_types=1);
 
 Phar::mapPhar('dca.phar');
 
-require 'phar://dca.phar/bin/console.php';
+require 'phar://dca.phar/bin/dca.php';
 
 __HALT_COMPILER();
 PHP
