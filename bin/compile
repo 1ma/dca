@@ -17,8 +17,16 @@ $phar->startBuffering();
 $phar->addFile($root . '/LICENSE', 'LICENSE');
 $phar->addFile($root . '/settings.ini', 'settings.ini');
 
-$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root . '/src')), $root);
-$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root . '/vendor')), $root);
+$filter = static function(SplFileInfo $current, $key, RecursiveIterator $iterator): bool {
+    if ($iterator->hasChildren()) {
+        return true;
+    }
+
+    return $current->isFile();
+};
+
+$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator(new RecursiveDirectoryIterator($root . '/src'), $filter)), $root);
+$phar->buildFromIterator(new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator(new RecursiveDirectoryIterator($root . '/vendor'), $filter)), $root);
 
 $phar->addFromString('/bin/console.php', str_replace("#!/usr/bin/env php\n", '', file_get_contents($root . '/bin/console')));
 
