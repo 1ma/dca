@@ -14,11 +14,10 @@ use UMA\DCA\Model\Bitcoin;
  *
  * @see https://www.kraken.com/help/api#withdraw-funds
  */
-class WithdrawalOrder extends Request
+final class WithdrawalOrder extends Request
 {
-    const WITHDRAWAL = 'Withdraw';
-
-    const ENDPOINT = 'https://api.kraken.com/0/private/'. self::WITHDRAWAL;
+    private const WITHDRAWAL = 'Withdraw';
+    private const ENDPOINT = 'https://api.kraken.com/0/private/'. self::WITHDRAWAL;
 
     public function __construct(Auth $auth, Bitcoin $amount, Address $address)
     {
@@ -27,7 +26,7 @@ class WithdrawalOrder extends Request
             'key' => (string) $address,
             'amount' => (string) $amount
         ]);
-        
+
         parent::__construct(
             'POST',
             self::ENDPOINT,

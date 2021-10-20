@@ -4,10 +4,11 @@ namespace UMA\DCA\Bitstamp\Request;
 
 use GuzzleHttp\Psr7\Request;
 use UMA\DCA\Bitstamp\Auth;
+use function http_build_query;
 
-class GetBalance extends Request
+final class GetBalance extends Request
 {
-    const ENDPOINT = 'https://www.bitstamp.net/api/v2/balance/';
+    private const ENDPOINT = 'https://www.bitstamp.net/api/v2/balance/';
 
     public function __construct(Auth $auth)
     {

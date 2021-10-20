@@ -14,7 +14,7 @@ use UMA\DCA\Model\WithdrawerInterface;
 use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
 
-class Provider implements ServiceProvider
+final class Provider implements ServiceProvider
 {
     public function provide(Container $c): void
     {
@@ -34,13 +34,6 @@ class Provider implements ServiceProvider
                 $c->get(Auth::class),
                 $c->get(Client::class),
                 $c->get(Converter::class)
-            );
-        });
-
-        $c->set(Checker::class, static function (Container $c): Checker {
-            return new Checker(
-                $c->get(Auth::class),
-                $c->get(Client::class)
             );
         });
 

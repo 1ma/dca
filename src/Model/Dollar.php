@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace UMA\DCA\Model;
 
+use InvalidArgumentException;
+use function number_format;
+
 /**
  * Value object representing a certain amount of US dollars.
  */
-class Dollar
+final class Dollar
 {
     /**
      * Each dollar can be subdivided into 100 cents.
      */
-    const BASIC_UNIT = 100;
+    private const BASIC_UNIT = 100;
 
-    /**
-     * @var int
-     */
-    private $cents;
+    private int $cents;
 
     private function __construct(int $cents)
     {
         if ($cents <= 0) {
-            throw new \InvalidArgumentException("Invalid cent amount received. Got: $cents");
+            throw new InvalidArgumentException("Invalid cent amount received. Got: $cents");
         }
 
         $this->cents = $cents;

@@ -13,11 +13,10 @@ use UMA\DCA\Kraken\Auth;
  * @see https://www.kraken.com/help/api#get-account-balance
  *
  */
-class GetBalance extends Request
+final class GetBalance extends Request
 {
-    const BALANCE = 'Balance';
-
-    const ENDPOINT = 'https://api.kraken.com/0/private/'. self::BALANCE;
+    private const BALANCE = 'Balance';
+    private const ENDPOINT = 'https://api.kraken.com/0/private/'. self::BALANCE;
 
     public function __construct(Auth $auth)
     {

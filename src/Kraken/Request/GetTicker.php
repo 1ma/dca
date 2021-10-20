@@ -11,9 +11,9 @@ use GuzzleHttp\Psr7\Request;
  *
  * @see https://www.kraken.com/help/api#get-ticker-info
  */
-class GetTicker extends Request
+final class GetTicker extends Request
 {
-    const ENDPOINT = 'https://api.kraken.com/0/public/Ticker?pair=XXBTZUSD';
+    private const ENDPOINT = 'https://api.kraken.com/0/public/Ticker?pair=XXBTZUSD';
 
     public function __construct()
     {

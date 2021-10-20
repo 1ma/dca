@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace UMA\DCA\Kraken;
 
 use GuzzleHttp\Client;
+use LogicException;
 use UMA\DCA\Kraken\Request\GetTicker;
 use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\Bitcoin;
 use UMA\DCA\Model\Dollar;
 use UMA\DCA\Model\Euro;
+use function json_decode;
 
 /**
  * Kraken ConverterInterface implementation.
  */
-class Converter implements ConverterInterface
+final class Converter implements ConverterInterface
 {
-    /**
-     * @var Client
-     */
-    private $http;
+    private Client $http;
 
     public function __construct(Client $http)
     {
@@ -41,6 +40,6 @@ class Converter implements ConverterInterface
      */
     public function EURBTC(Euro $euro): Bitcoin
     {
-        throw new \LogicException('Not implemented yet');
+        throw new LogicException('Not implemented yet');
     }
 }

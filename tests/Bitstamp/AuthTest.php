@@ -6,23 +6,20 @@ namespace UMA\Tests\DCA\Bitstamp;
 
 use PHPUnit\Framework\TestCase;
 use UMA\DCA\Bitstamp\Auth;
-use UMA\DCA\Bitstamp\NonceGenerator;
+use UMA\DCA\Bitstamp\NonceGeneratorInterface;
 
-class AuthTest extends TestCase
+final class AuthTest extends TestCase
 {
     public function testAuthComputesCorrectCredentials()
     {
-        $auth = new Auth('123', 'abc', 'xyz');
+        $deterministicNonceGenerator = new class implements NonceGeneratorInterface {
+            public function next(): int
+            {
+                return 1500000000000000;
+            }
+        };
 
-        /** @var NonceGenerator|\PHPUnit_Framework_MockObject_MockObject $nonceGenerator */
-        $nonceGenerator = $this->getMockBuilder(NonceGenerator::class)
-            ->getMock();
-
-        $nonceGenerator->expects($this->once())
-            ->method('next')
-            ->will($this->returnValue(1500000000000000));
-
-        $this->replaceInstanceProperty($auth, 'nonceGenerator', $nonceGenerator);
+        $auth = new Auth('123', 'abc', 'xyz', $deterministicNonceGenerator);
 
         $expected = [
             'key' => '123',
@@ -31,19 +28,5 @@ class AuthTest extends TestCase
         ];
 
         self::assertSame($expected, $auth->getCredentials());
-    }
-
-    /**
-     * @param object $instance
-     * @param string $propertyName
-     * @param mixed  $mysteryMeat
-     */
-    private function replaceInstanceProperty($instance, $propertyName, $mysteryMeat)
-    {
-        $property = (new \ReflectionClass($instance))
-            ->getProperty($propertyName);
-
-        $property->setAccessible(true);
-        $property->setValue($instance, $mysteryMeat);
     }
 }

@@ -13,12 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use UMA\DCA\Model\Address;
 use UMA\DCA\Model\Bitcoin;
 use UMA\DCA\Model\WithdrawerInterface;
+use function json_decode;
 
 #[AsCommand(
     name: 'kraken:withdraw',
     description: 'Withdraw BTC from Kraken to the given address.'
 )]
-class WithdrawCommand extends Command
+final class WithdrawCommand extends Command
 {
     private WithdrawerInterface $withdrawer;
     private LoggerInterface $logger;

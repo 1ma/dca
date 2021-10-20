@@ -5,40 +5,27 @@ declare(strict_types=1);
 namespace UMA\DCA\Kraken;
 
 use UMA\DCA\Kraken\DTO\QueryPrivate;
+use function base64_decode;
+use function base64_encode;
+use function hash;
+use function hash_hmac;
+use function http_build_query;
 
-class Auth
+final class Auth
 {
-    /**
-     * @var string
-     */
-    private $apiKey;
-
-    /**
-     * @var NonceGenerator
-     */
-    private $nonceGenerator;
-
-    /**
-     * @var string
-     */
-    private $secret;
+    private string $apiKey;
+    private NonceGenerator $nonceGenerator;
+    private string $secret;
 
     public function __construct(string $apiKey, string $secret)
     {
         $this->apiKey = $apiKey;
-        $this->nonceGenerator = new NonceGenerator;
+        $this->nonceGenerator = new NonceGenerator();
         $this->secret = $secret;
     }
 
-    /**
-     * @param string $method
-     * @param array $postData
-     *
-     * @return QueryPrivate
-     */
     public function getQuery(string $method, array $postData): QueryPrivate
     {
-
         if(!isset($postData['nonce'])) {
             $postData['nonce'] = $this->nonceGenerator->next();
         }
@@ -49,12 +36,6 @@ class Auth
         ], $postData);
     }
 
-    /**
-     * @param string $method
-     * @param array $postData
-     *
-     * @return string
-     */
     private function computeSignature(string $method, array $postData): string
     {
         return base64_encode(
@@ -62,13 +43,9 @@ class Auth
                 'sha512',
                 '/0/private/' . $method . hash(
                     'sha256',
-                    $postData['nonce'] . http_build_query(
-                            $postData,
-                            '',
-                            '&'
-                        ),
-                        true
-                    ),
+                    $postData['nonce'] . http_build_query($postData),
+                    true
+                ),
                 base64_decode($this->secret),
                 true
             )

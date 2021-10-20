@@ -14,22 +14,11 @@ use UMA\DCA\Model\EuroBuyerInterface;
 /**
  * Bitstamp implementation of the BuyerInterface.
  */
-class Buyer implements EuroBuyerInterface
+final class Buyer implements EuroBuyerInterface
 {
-    /**
-     * @var Auth
-     */
-    private $auth;
-
-    /**
-     * @var Client
-     */
-    private $http;
-
-    /**
-     * @var ConverterInterface
-     */
-    private $converter;
+    private Auth $auth;
+    private Client $http;
+    private ConverterInterface $converter;
 
     public function __construct(Auth $auth, Client $http, ConverterInterface $converter)
     {

@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace UMA\DCA\Model;
 
+use InvalidArgumentException;
+use function number_format;
+
 /**
  * Value object representing a certain amount of bitcoin.
  */
-class Bitcoin
+final class Bitcoin
 {
     /**
      * Each Bitcoin can be subdivided in 100 million units, called 'satoshi'.
      */
-    const BASIC_UNIT = 10 ** 8;
+    private const BASIC_UNIT = 10 ** 8;
 
     /**
      * There can be only 21 million bitcoin in existence, or 21 * (10 ** 14) satoshi.
      */
-    const MAXIMUM_AMOUNT = 21 * (10 ** 6) * self::BASIC_UNIT;
+    public const MAXIMUM_AMOUNT = 21_000_000 * self::BASIC_UNIT;
 
-    /**
-     * @var int
-     */
-    private $satoshis;
+    private int $satoshis;
 
     private function __construct(int $satoshis)
     {
         if ($satoshis <= 0 || $satoshis > self::MAXIMUM_AMOUNT) {
-            throw new \InvalidArgumentException("Invalid satoshi amount received. Got: $satoshis");
+            throw new InvalidArgumentException("Invalid satoshi amount received. Got: $satoshis");
         }
 
         $this->satoshis = $satoshis;

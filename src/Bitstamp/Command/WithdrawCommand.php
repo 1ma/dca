@@ -19,7 +19,7 @@ use function json_decode;
     name: 'bitstamp:withdraw',
     description: 'Withdraw BTC from Bitstamp to the given address.'
 )]
-class WithdrawCommand extends Command
+final class WithdrawCommand extends Command
 {
     private WithdrawerInterface $withdrawer;
     private LoggerInterface $logger;

@@ -19,7 +19,7 @@ use function sprintf;
     name: 'bitstamp:buy',
     description: 'Buy BTC at market price at Bitstamp.'
 )]
-class BuyCommand extends Command
+final class BuyCommand extends Command
 {
     private EuroBuyerInterface $buyer;
     private LoggerInterface $logger;

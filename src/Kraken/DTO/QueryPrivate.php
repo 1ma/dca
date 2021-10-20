@@ -4,20 +4,10 @@ declare(strict_types=1);
 
 namespace UMA\DCA\Kraken\DTO;
 
-/**
- * Query
- */
-class QueryPrivate
+final class QueryPrivate
 {
-    /**
-     * @var array
-     */
-    private $headers;
-
-    /**
-     * @var array
-     */
-    private $body;
+    private array $headers;
+    private array $body;
 
     public function __construct(array $headers, array $body)
     {
@@ -25,17 +15,11 @@ class QueryPrivate
         $this->body = $body;
     }
 
-    /**
-     * @return array
-     */
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    /**
-     * @return array
-     */
     public function getBody(): array
     {
         return $this->body;

@@ -7,7 +7,7 @@ namespace UMA\Tests\DCA\Model;
 use PHPUnit\Framework\TestCase;
 use UMA\DCA\Model\Bitcoin;
 
-class BitcoinTest extends TestCase
+final class BitcoinTest extends TestCase
 {
     /**
      * @dataProvider satoshiProvider

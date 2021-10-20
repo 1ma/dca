@@ -14,22 +14,11 @@ use UMA\DCA\Model\Dollar;
 /**
  * Kraken implementation of the BuyerInterface.
  */
-class Buyer implements BuyerInterface
+final class Buyer implements BuyerInterface
 {
-    /**
-     * @var Auth
-     */
-    private $auth;
-
-    /**
-     * @var Client
-     */
-    private $http;
-
-    /**
-     * @var ConverterInterface
-     */
-    private $converter;
+    private Auth $auth;
+    private Client $http;
+    private ConverterInterface $converter;
 
     public function __construct(Auth $auth, Client $http, ConverterInterface $converter)
     {
@@ -43,8 +32,7 @@ class Buyer implements BuyerInterface
      */
     public function buy(Dollar $dollar): ResponseInterface
     {
-        return $this->http->send(
-            new BuyOrder($this->auth, $this->converter->USDBTC($dollar))
+        return $this->http->send(new BuyOrder($this->auth, $this->converter->USDBTC($dollar))
         );
     }
 }

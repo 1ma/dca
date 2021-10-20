@@ -10,23 +10,15 @@ use Monolog\Handler\AbstractProcessingHandler;
 /**
  * A custom SlackHandler that uses our own Guzzle client.
  */
-class SlackHandler extends AbstractProcessingHandler
+final class SlackHandler extends AbstractProcessingHandler
 {
-    /**
-     * @var Client
-     */
-    private $http;
-
-    /**
-     * @var string
-     */
-    private $url;
+    private Client $http;
+    private string $url;
 
     public function __construct(Client $http, string $url, int $minLogLevel)
     {
         $this->http = $http;
         $this->url = $url;
-
         parent::__construct($minLogLevel);
     }
 

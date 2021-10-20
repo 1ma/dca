@@ -7,7 +7,7 @@ namespace UMA\Tests\DCA\Bitstamp;
 use PHPUnit\Framework\TestCase;
 use UMA\DCA\Bitstamp\NonceGenerator;
 
-class NonceGeneratorTest extends TestCase
+final class NonceGeneratorTest extends TestCase
 {
     public function testNoncesAreUniqueAndMonotonic()
     {

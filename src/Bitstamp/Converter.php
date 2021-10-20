@@ -10,16 +10,14 @@ use UMA\DCA\Model\Bitcoin;
 use UMA\DCA\Model\ConverterInterface;
 use UMA\DCA\Model\Dollar;
 use UMA\DCA\Model\Euro;
+use function json_decode;
 
 /**
  * Bitstamp ConverterInterface implementation.
  */
-class Converter implements ConverterInterface
+final class Converter implements ConverterInterface
 {
-    /**
-     * @var Client
-     */
-    private $http;
+    private Client $http;
 
     public function __construct(Client $http)
     {

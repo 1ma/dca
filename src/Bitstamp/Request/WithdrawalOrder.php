@@ -8,24 +8,25 @@ use GuzzleHttp\Psr7\Request;
 use UMA\DCA\Bitstamp\Auth;
 use UMA\DCA\Model\Address;
 use UMA\DCA\Model\Bitcoin;
+use function http_build_query;
 
 /**
  * An HTTP request for withdrawing some bitcoin to the given address.
  *
  * @see https://www.bitstamp.net/api/#bitcoin-withdrawal
  */
-class WithdrawalOrder extends Request
+final class WithdrawalOrder extends Request
 {
-    const ENDPOINT = 'https://www.bitstamp.net/api/bitcoin_withdrawal/';
+    private const ENDPOINT = 'https://www.bitstamp.net/api/bitcoin_withdrawal/';
 
     public function __construct(Auth $auth, Bitcoin $amount, Address $address)
     {
         $body = http_build_query(
-            array_merge($auth->getCredentials(), [
-                'amount' => (string) $amount,
-                'address' => (string) $address,
+            $auth->getCredentials() + [
+                'amount' => (string)$amount,
+                'address' => (string)$address,
                 'instant' => '0'
-            ])
+            ]
         );
 
         parent::__construct(

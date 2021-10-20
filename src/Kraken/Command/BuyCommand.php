@@ -12,12 +12,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use UMA\DCA\Model\BuyerInterface;
 use UMA\DCA\Model\Dollar;
+use function count;
+use function implode;
+use function json_decode;
 
 #[AsCommand(
     name: 'kraken:buy',
     description: 'Buy BTC at market price at Kraken.'
 )]
-class BuyCommand extends Command
+final class BuyCommand extends Command
 {
     private const KRAKEN = 'kraken';
 
@@ -47,8 +50,8 @@ class BuyCommand extends Command
             'response' => json_decode((string) $response->getBody(), true)
         ];
 
-        if (count($ctx['response']["error"])) {
-            $this->logger->error(implode(" ", $ctx['response']['error']), $ctx);
+        if (count($ctx['response']['error'])) {
+            $this->logger->error(implode(' ', $ctx['response']['error']), $ctx);
 
             return 1;
         }

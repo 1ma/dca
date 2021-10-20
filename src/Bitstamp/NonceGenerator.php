@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace UMA\DCA\Bitstamp;
 
+use function microtime;
+
 /**
  * The NonceGenerator returns integers that are
  * suitable to be used as nonces in authenticated
  * requests against the Bitstamp HTTP API.
  */
-class NonceGenerator
+class NonceGenerator implements NonceGeneratorInterface
 {
-    private $last = 0;
+    private const SECONDS_TO_MICROS = 1_000_000;
 
-    /**
-     * @return int
-     */
+    private int $last = 0;
+
     public function next(): int
     {
-        $time = $this->currentTimeMicros();
+        $time = (int)(self::SECONDS_TO_MICROS * microtime(true));
 
         $next = $time > $this->last ?
             $time : $this->last + 1;
@@ -26,10 +27,5 @@ class NonceGenerator
         $this->last = $next;
 
         return $next;
-    }
-
-    private function currentTimeMicros(): int
-    {
-        return (int)(1000000 * microtime(true));
     }
 }

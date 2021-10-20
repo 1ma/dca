@@ -22,7 +22,7 @@ use UMA\DIC\ServiceProvider;
  * Defines common services across bounded contexts, such
  * as the logger or the HTTP client.
  */
-class SharedProvider implements ServiceProvider
+final class SharedProvider implements ServiceProvider
 {
     public function provide(Container $c): void
     {

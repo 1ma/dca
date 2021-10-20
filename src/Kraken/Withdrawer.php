@@ -14,17 +14,10 @@ use UMA\DCA\Model\WithdrawerInterface;
 /**
  * Kraken implementation of the WithdrawerInterface.
  */
-class Withdrawer implements WithdrawerInterface
+final class Withdrawer implements WithdrawerInterface
 {
-    /**
-     * @var Auth
-     */
-    private $auth;
-
-    /**
-     * @var Client
-     */
-    private $http;
+    private Auth $auth;
+    private Client $http;
 
     public function __construct(Auth $auth, Client $http)
     {
@@ -37,8 +30,6 @@ class Withdrawer implements WithdrawerInterface
      */
     public function withdraw(Bitcoin $bitcoin, Address $address): ResponseInterface
     {
-        return $this->http->send(
-            new WithdrawalOrder($this->auth, $bitcoin, $address)
-        );
+        return $this->http->send(new WithdrawalOrder($this->auth, $bitcoin, $address));
     }
 }

@@ -14,15 +14,20 @@ use UMA\DCA\Model\WithdrawerInterface;
 use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
 
-class Provider implements ServiceProvider
+final class Provider implements ServiceProvider
 {
     public function provide(Container $c): void
     {
+        $c->set(NonceGeneratorInterface::class, static function() {
+            return new NonceGenerator();
+        });
+
         $c->set(Auth::class, static function (Container $c): Auth {
             return new Auth(
                 (string) $c->get('settings')['bitstamp']['api_key'],
                 (string) $c->get('settings')['bitstamp']['customer_id'],
-                (string) $c->get('settings')['bitstamp']['hmac_secret']
+                (string) $c->get('settings')['bitstamp']['hmac_secret'],
+                $c->get(NonceGeneratorInterface::class)
             );
         });
 

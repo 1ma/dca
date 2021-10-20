@@ -4,34 +4,22 @@ declare(strict_types=1);
 
 namespace UMA\DCA\Bitstamp;
 
-class Auth
+use function hash_hmac;
+use function strtoupper;
+
+final class Auth
 {
-    /**
-     * @var string
-     */
-    private $apiKey;
+    private string $apiKey;
+    private string $customerId;
+    private NonceGeneratorInterface $nonceGenerator;
+    private string $secret;
 
-    /**
-     * @var string
-     */
-    private $customerId;
-
-    /**
-     * @var NonceGenerator
-     */
-    private $nonceGenerator;
-
-    /**
-     * @var string
-     */
-    private $secret;
-
-    public function __construct(string $apiKey, string $customerId, string $secret)
+    public function __construct(string $apiKey, string $customerId, string $secret, NonceGeneratorInterface $nonceGenerator)
     {
         $this->apiKey = $apiKey;
         $this->customerId = $customerId;
-        $this->nonceGenerator = new NonceGenerator;
         $this->secret = $secret;
+        $this->nonceGenerator = $nonceGenerator;
     }
 
     /**
