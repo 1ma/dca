@@ -10,8 +10,8 @@
         "guzzlehttp/guzzle": "^7.4",
         "linusu/bitcoin-address-validator": "^0.1.2",
         "monolog/monolog": "^2.0",
-        "symfony/console": "^5.3",
-        "uma/dic": "^2.0"
+        "symfony/console": "^6.0",
+        "uma/dic": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
