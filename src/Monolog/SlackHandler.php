@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace UMA\DCA\Monolog;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 
 /**
- * A custom SlackHandler that uses our own Guzzle client.
+ * A custom Monolog handler that posts logs to a Slack webhook.
  */
 final class SlackHandler extends AbstractProcessingHandler
 {
-    private Client $http;
+    private ClientInterface $http;
     private string $url;
 
-    public function __construct(Client $http, string $url, int $minLogLevel)
+    public function __construct(ClientInterface $http, string $url, int $minLogLevel)
     {
         $this->http = $http;
         $this->url = $url;
@@ -27,8 +27,6 @@ final class SlackHandler extends AbstractProcessingHandler
      */
     protected function write(array $record): void
     {
-        $this->http->post($this->url, [
-            'json' => ['text' => $record['formatted']]
-        ]);
+        $this->http->request('POST', $this->url, ['json' => ['text' => $record['formatted']]]);
     }
 }

@@ -56,19 +56,10 @@ final class SharedProvider implements ServiceProvider
         });
 
         $c->set(Logger::class, static function (Container $c): LoggerInterface {
-            $logger = new Logger(
-                APP_NAME,
-                [new StreamHandler('php://stdout', Logger::DEBUG)]
-            );
+            $logger = new Logger(APP_NAME, [new StreamHandler('php://stdout', Logger::DEBUG)]);
 
             if (null !== $webhookUrl = $c->get('settings')['slack']['webhook_url']) {
-                $logger->pushHandler(
-                    new SlackHandler(
-                        $c[Client::class],
-                        $webhookUrl,
-                        Logger::NOTICE
-                    )
-                );
+                $logger->pushHandler(new SlackHandler($c->get(Client::class), $webhookUrl, Logger::NOTICE));
             }
 
             return $logger;
