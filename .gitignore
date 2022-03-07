@@ -1,6 +1,3 @@
-/.idea/
-/build/
-/composer.lock
-/settings.ini
-/vendor/
-*.phar
+.idea/
+bin/
+obj/
