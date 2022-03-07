@@ -1,5 +1,5 @@
 namespace DCA.Lib;
 
-public class Class1
+public struct Euro
 {
 }
