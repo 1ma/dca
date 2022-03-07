@@ -1,5 +1,5 @@
 namespace DCA.Lib;
 
-public struct Dollar
+public readonly struct Dollar
 {
 }

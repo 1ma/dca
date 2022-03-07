@@ -1,5 +1,5 @@
 namespace DCA.Lib;
 
-public struct Euro
+public readonly struct Euro
 {
 }
