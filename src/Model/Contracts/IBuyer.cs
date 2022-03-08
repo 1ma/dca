@@ -1,4 +1,4 @@
-namespace DCA.Lib.Contracts;
+namespace DCA.Model.Contracts;
 
 public interface IBuyer<out T> where T : ICurrency
 {

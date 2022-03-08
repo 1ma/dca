@@ -1,6 +1,7 @@
-using DCA.Lib.Contracts;
+using DCA.Model;
+using DCA.Model.Contracts;
 
-namespace DCA.Lib.Bitstamp;
+namespace DCA.Exchanges.Bitstamp;
 
 public class BalanceChecker :  IBalanceChecker<Bitcoin>, IBalanceChecker<Dollar>, IBalanceChecker<Euro>
 {

@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace DCA.Lib.Tests;
+namespace DCA.Model.Tests;
 
 public class UnitTest1
 {

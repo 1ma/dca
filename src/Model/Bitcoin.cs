@@ -1,17 +1,15 @@
-using DCA.Lib.Contracts;
+namespace DCA.Model;
 
-namespace DCA.Lib;
-
-public readonly struct Euro : ICurrency
+public struct Bitcoin : ICurrency
 {
     public string GetSymbol()
     {
-        return "EUR";
+        return "BTC";
     }
 
     public uint GetExponent()
     {
-        return 2;
+        return 8;
     }
 
     public ulong GetRawRepresentation()

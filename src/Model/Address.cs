@@ -1,4 +1,4 @@
-namespace DCA.Lib;
+namespace DCA.Model;
 
 public readonly struct Address
 {

@@ -1,12 +1,10 @@
-using DCA.Lib.Contracts;
+namespace DCA.Model;
 
-namespace DCA.Lib;
-
-public readonly struct Dollar : ICurrency
+public readonly struct Euro : ICurrency
 {
     public string GetSymbol()
     {
-        return "USD";
+        return "EUR";
     }
 
     public uint GetExponent()

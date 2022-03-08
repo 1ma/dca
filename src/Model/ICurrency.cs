@@ -1,4 +1,4 @@
-namespace DCA.Lib.Contracts;
+namespace DCA.Model;
 
 public interface ICurrency
 {
